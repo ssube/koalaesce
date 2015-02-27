@@ -1,4 +1,4 @@
-var koalaesce = require("../dist/koalaesce").koalaesce;
+var koalaesce = require("../dist/koalaesce");
 
 describe("koalaesce", function () {
     it("should get a nested property one level down", function () {

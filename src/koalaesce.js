@@ -16,7 +16,7 @@ class NotInvokableError extends Error {
     }
 }
 
-export class koalaesce {
+export default class koalaesce {
     static impl(base, steps) {
         return steps.reduce((prev, cur) => {
             if (cur === null) {
