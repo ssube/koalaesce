@@ -56,5 +56,16 @@ describe("koalaesce", function () {
     it("should handle null values along the chain", function () {
         var obj = {foo: null};
         assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
-    })
+    });
+
+    it("should handle deep, mixed chains", function () {
+        var obj = {foo: {bar: function () { return {baz: 4}; }}};
+        assert.equal(4, koalaesce.get(obj, "foo", ["bar"], "baz"));
+    });
+
+    it("should handle recursive chains", function () {
+        var obj = {foo: {bar: function (o) { return o; }}};
+        var alt = {baz: 4};
+        assert.equal(4, koalaesce.get(obj, "foo", ["bar", obj], "foo", ["bar", obj], "foo", ["bar", alt], "baz"));
+    });
 });
