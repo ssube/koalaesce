@@ -27,7 +27,7 @@ export default class koalaesce {
                 let name = cur[0], args = cur.slice(1);
                 let next = prev[name];
                 if (next && next.apply) {
-                    return next.apply(this, args);
+                    return next.apply(prev, args);
                 } else {
                     throw new NotInvokableError(name);
                 }

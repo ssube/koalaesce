@@ -68,4 +68,10 @@ describe("koalaesce", () => {
         var alt = {baz: 4};
         assert.equal(4, koalaesce.get(obj, "foo", ["bar", obj], "foo", ["bar", obj], "foo", ["bar", alt], "baz"));
     });
+
+    it("should use the previous link as this scope", () => {
+        // Don't replace this function () { ... } with an arrow func, it tests scope stuff
+        var obj = {foo: {bar: 4, baz: function () { return this.bar }}};
+        assert.equal(4, koalaesce.get(obj, "foo", ["baz"]));
+    });
 });
