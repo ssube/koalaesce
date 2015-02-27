@@ -1,0 +1,28 @@
+{
+  "name": "koalaesce",
+  "version": "0.1.0",
+  "description": "Null coalescing library for JS",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "gulp": "~3.8.11",
+    "gulp-babel": "~4.0.0"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssube/koalaesce"
+  },
+  "keywords": [
+    "null",
+    "option",
+    "optional",
+    "dig"
+  ],
+  "author": "ssube",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ssube/koalaesce/issues"
+  }
+}
