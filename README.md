@@ -13,6 +13,9 @@ the ability to specify a default value if the chain could not be resolved.
 
     let koalaesce = require("./koalaesce");
 
+The gulpfile included with `koalaesce` builds modules for AMD, CommonJS, and UMD loaders, so `koalaesce` should be
+compatible with most module systems and is usable from the browser as well as node/io tools.
+
 Two primary methods are exposed from this class: `get` and `getDefault`.
 
 ### `get`
