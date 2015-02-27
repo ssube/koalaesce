@@ -31,6 +31,8 @@ gulp.task("scripts:umd", function () {
 gulp.task("scripts", ["scripts:amd", "scripts:common", "scripts:umd"]);
 
 gulp.task("tests", ["scripts"], function () {
+    require("babel/register");
+
     return gulp.src("tests/**/*.js")
         .pipe(mocha())
 });
