@@ -3,18 +3,18 @@ var koalaesce = require("../dist/koalaesce").koalaesce;
 describe("koalaesce", function () {
     it("should get a nested property one level down", function () {
         var obj = {foo: Math.random()};
-        expect(koalaesce(obj, "foo")).toEqual(obj.foo);
+        expect(koalaesce.get(obj, "foo")).toBe(obj.foo);
     });
 
     it("should get a nested property two levels down", function () {
         var obj = {foo: {bar: Math.random()}};
-        expect(koalaesce(obj, "foo", "bar")).toEqual(obj.foo.bar);
+        expect(koalaesce.get(obj, "foo", "bar")).toBe(obj.foo.bar);
     });
 
     it("should throw on missing properties", function () {
         var obj = {foo: {baz: Math.random()}};
         expect(function () {
-            koalaesce(obj, "foo", "bar");
+            koalaesce.get(obj, "foo", "bar");
         }).toThrow();
     });
 
@@ -22,7 +22,7 @@ describe("koalaesce", function () {
         var obj = {foo: function () {
             return true;
         }};
-        expect(koalaesce(obj, ["foo"])).toBe(true);
+        expect(koalaesce.get(obj, ["foo"])).toBe(true);
     });
 
     it("should invoke functions with arguments", function () {
@@ -30,13 +30,25 @@ describe("koalaesce", function () {
         var obj = {foo: function (a) {
             return a;
         }};
-        expect(koalaesce(obj, ["foo", rand])).toEqual(rand);
+        expect(koalaesce.get(obj, ["foo", rand])).toBe(rand);
     });
 
     it("should throw when attempting to invoke a non-function", function () {
         var obj = {foo: 3};
         expect(function () {
-            koalaesce(obj, ["foo", 1, 2]);
+            koalaesce.get(obj, ["foo", 1, 2]);
+        }).toThrow();
+    });
+
+    it("should return the default", function () {
+        var obj = {foo: {baz: 0}};
+        expect(koalaesce.getDefault(obj, 3, "foo", "bar")).toBe(3);
+    });
+
+    it("should not catch exceptions and default", function () {
+        var obj = {foo: function () { throw new Error("Boom!"); }};
+        expect(function () {
+            koalaesce.getDefault(obj, 3, ["foo"]);
         }).toThrow();
     });
 });
