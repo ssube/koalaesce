@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 var babel = require("gulp-babel");
-var jasmine = require("gulp-jasmine");
+var mocha = require("gulp-mocha");
 
 gulp.task("scripts", function () {
     return gulp.src("src/**/*.js")
@@ -10,8 +10,7 @@ gulp.task("scripts", function () {
 
 gulp.task("tests", ["scripts"], function () {
     return gulp.src("tests/**/*.js")
-        //.pipe(babel())
-        .pipe(jasmine())
+        .pipe(mocha())
 });
 
 gulp.task("default", ["scripts", "tests"]);

@@ -1,28 +1,29 @@
 var koalaesce = require("../dist/koalaesce");
+var assert = require("assert");
 
 describe("koalaesce", function () {
     it("should get a nested property one level down", function () {
         var obj = {foo: Math.random()};
-        expect(koalaesce.get(obj, "foo")).toBe(obj.foo);
+        assert.equal(obj.foo, koalaesce.get(obj, "foo"));
     });
 
     it("should get a nested property two levels down", function () {
         var obj = {foo: {bar: Math.random()}};
-        expect(koalaesce.get(obj, "foo", "bar")).toBe(obj.foo.bar);
+        assert.equal(obj.foo.bar, koalaesce.get(obj, "foo", "bar"));
     });
 
     it("should throw on missing properties", function () {
         var obj = {foo: {baz: Math.random()}};
-        expect(function () {
+        assert.throws(function () {
             koalaesce.get(obj, "foo", "bar");
-        }).toThrow();
+        });
     });
 
     it("should invoke functions without arguments", function () {
         var obj = {foo: function () {
             return true;
         }};
-        expect(koalaesce.get(obj, ["foo"])).toBe(true);
+        assert.equal(true, koalaesce.get(obj, ["foo"]));
     });
 
     it("should invoke functions with arguments", function () {
@@ -30,30 +31,30 @@ describe("koalaesce", function () {
         var obj = {foo: function (a) {
             return a;
         }};
-        expect(koalaesce.get(obj, ["foo", rand])).toBe(rand);
+        assert.equal(rand, koalaesce.get(obj, ["foo", rand]));
     });
 
     it("should throw when attempting to invoke a non-function", function () {
         var obj = {foo: 3};
-        expect(function () {
+        assert.throws(function () {
             koalaesce.get(obj, ["foo", 1, 2]);
-        }).toThrow();
+        });
     });
 
     it("should return the default", function () {
         var obj = {foo: {baz: 0}};
-        expect(koalaesce.getDefault(obj, 3, "foo", "bar")).toBe(3);
+        assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
     });
 
     it("should not catch exceptions and default", function () {
         var obj = {foo: function () { throw new Error("Boom!"); }};
-        expect(function () {
+        assert.throws(function () {
             koalaesce.getDefault(obj, 3, ["foo"]);
-        }).toThrow();
+        });
     });
 
     it("should handle null values along the chain", function () {
         var obj = {foo: null};
-        expect(koalaesce.getDefault(obj, 3, "foo", "bar")).toBe(3);
+        assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
     })
 });
