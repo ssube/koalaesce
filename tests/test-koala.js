@@ -31,5 +31,12 @@ describe("koalaesce", function () {
             return a;
         }};
         expect(koalaesce(obj, ["foo", rand])).toEqual(rand);
-    })
+    });
+
+    it("should throw when attempting to invoke a non-function", function () {
+        var obj = {foo: 3};
+        expect(function () {
+            koalaesce(obj, ["foo", 1, 2]);
+        }).toThrow();
+    });
 });
