@@ -51,4 +51,9 @@ describe("koalaesce", function () {
             koalaesce.getDefault(obj, 3, ["foo"]);
         }).toThrow();
     });
+
+    it("should handle null values along the chain", function () {
+        var obj = {foo: null};
+        expect(koalaesce.getDefault(obj, 3, "foo", "bar")).toBe(3);
+    })
 });

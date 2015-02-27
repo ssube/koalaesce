@@ -4,6 +4,12 @@ class MissingLinkError extends Error {
     }
 }
 
+class NullLinkError extends Error {
+    constructor(link) {
+        super("Encountered a null link at " + link);
+    }
+}
+
 class NotInvokableError extends Error {
     constructor(link) {
         super("Attempting to invoke non-function at " + link);
@@ -15,6 +21,8 @@ export class koalaesce {
         return steps.reduce((prev, cur) => {
             if (cur === null) {
                 return null;
+            } else if (prev === null) {
+                throw new NullLinkError(cur);
             } else if (cur.constructor === Array) {
                 let name = cur[0], args = cur.slice(1);
                 let next = prev[name];
@@ -39,7 +47,7 @@ export class koalaesce {
         try {
             return koalaesce.impl(base, steps);
         } catch (e) {
-            if (e.constructor === MissingLinkError) {
+            if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
                 return def;
             } else {
                 throw e;
