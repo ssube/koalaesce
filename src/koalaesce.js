@@ -54,6 +54,10 @@ export default class koalaesce {
     }
 
     static get(base, ...steps) {
+        return koalaesce.getDefault(base, null, ...steps);
+    }
+
+    static getOrThrow(base, ...steps) {
         return koalaesce.impl(base, steps);
     }
 
