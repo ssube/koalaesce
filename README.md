@@ -1,4 +1,7 @@
 # koalaesce
+
+Travis CI: [![Build Status](https://travis-ci.org/ssube/koalaesce.svg?branch=master)](https://travis-ci.org/ssube/koalaesce)
+
 ## About
 A simple null-coalescing library for JS, providing behavior much like 
 [C#'s `??` operator](https://msdn.microsoft.com/en-us/library/ms173224.aspx) or 
