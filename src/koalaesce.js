@@ -16,9 +16,23 @@ class NotInvokableError extends Error {
     }
 }
 
+function koalaesce_reducePass(scope, cb, initial) {
+    return scope.reduce(cb, initial);
+}
+
+function koalaesce_reduceShim(scope, cb, initial) {
+    let value = initial;
+    for (let i = 0; i < scope.length; ++i) {
+        value = cb(value, scope[i]);
+    }
+    return value;
+}
+
+let reduceImpl = Array.prototype.reduce ? koalaesce_reducePass : koalaesce_reduceShim;
+
 export default class koalaesce {
     static impl(base, steps) {
-        return steps.reduce((prev, cur) => {
+        return reduceImpl(steps, (prev, cur) => {
             if (cur === null) {
                 return null;
             } else if (prev === null) {
