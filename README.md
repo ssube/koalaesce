@@ -20,7 +20,7 @@ The gulpfile included with `koalaesce` builds modules for AMD, CommonJS, and UMD
 compatible with most module systems and is usable from the browser as well as node/io tools.
 
 Two primary methods are exposed from this class: `get` and `getDefault`. For users preferring exceptions over
-null, 
+null, the `getOrThrow` method is provided. All use the same underlying implementation.
 
 ### `get`
 `koalaesce.get` works down through a chain, returning the last link (if it can be found). If a link is missing or a
