@@ -31,7 +31,11 @@ function koalaesce_reduceShim(scope, cb, initial) {
 let reduceImpl = Array.prototype.reduce ? koalaesce_reducePass : koalaesce_reduceShim;
 
 export default class koalaesce {
-    static impl(base, steps) {
+    static get(base, ...steps) {
+        return koalaesce.getDefault(base, null, ...steps);
+    }
+
+    static getOrThrow(base, ...steps) {
         return reduceImpl(steps, (prev, cur) => {
             if (cur === null) {
                 return null;
@@ -45,7 +49,7 @@ export default class koalaesce {
                 } else {
                     throw new NotInvokableError(name);
                 }
-            } else if (prev.hasOwnProperty(cur)) {
+            } else if (prev[cur] !== undefined) {
                 return prev[cur];
             } else {
                 throw new MissingLinkError(cur);
@@ -53,17 +57,9 @@ export default class koalaesce {
         }, base);
     }
 
-    static get(base, ...steps) {
-        return koalaesce.getDefault(base, null, ...steps);
-    }
-
-    static getOrThrow(base, ...steps) {
-        return koalaesce.impl(base, steps);
-    }
-
     static getDefault(base, def, ...steps) {
         try {
-            return koalaesce.impl(base, steps);
+            return koalaesce.getOrThrow(base, ...steps);
         } catch (e) {
             if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
                 return def;

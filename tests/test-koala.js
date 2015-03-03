@@ -56,6 +56,28 @@ describe("koalaesce", () => {
         var obj = {foo: {bar: 4, baz: function () { return this.bar }}};
         assert.equal(4, koalaesce.get(obj, "foo", ["baz"]));
     });
+
+    it("should get properties from the prototype", () => {
+        function TestObject() {
+          // nop
+        }
+        TestObject.prototype.value = Math.random();
+
+        var obj = new TestObject();
+        assert.equal(obj.value, koalaesce.get(obj, "value"));
+    });
+
+    it("should invoke methods from the prototype", () => {
+        function TestObject() {
+          this.value = Math.random();
+        }
+        TestObject.prototype.getValue = function () { 
+          return this.value; 
+        };
+
+        var obj = new TestObject();
+        assert.equal(obj.value, koalaesce.get(obj, ["getValue"]));
+    });
   });
 
   describe("getOrThrow", () => {

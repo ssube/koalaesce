@@ -71,32 +71,6 @@
         }
 
         _prototypeProperties(koalaesce, {
-            impl: {
-                value: function impl(base, steps) {
-                    return reduceImpl(steps, function (prev, cur) {
-                        if (cur === null) {
-                            return null;
-                        } else if (prev === null) {
-                            throw new NullLinkError(cur);
-                        } else if (cur.constructor === Array) {
-                            var _name = cur[0],
-                                args = cur.slice(1);
-                            var next = prev[_name];
-                            if (next && next.apply) {
-                                return next.apply(prev, args);
-                            } else {
-                                throw new NotInvokableError(_name);
-                            }
-                        } else if (prev.hasOwnProperty(cur)) {
-                            return prev[cur];
-                        } else {
-                            throw new MissingLinkError(cur);
-                        }
-                    }, base);
-                },
-                writable: true,
-                configurable: true
-            },
             get: {
                 value: function get(base) {
                     for (var _len = arguments.length, steps = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -114,7 +88,26 @@
                         steps[_key - 1] = arguments[_key];
                     }
 
-                    return koalaesce.impl(base, steps);
+                    return reduceImpl(steps, function (prev, cur) {
+                        if (cur === null) {
+                            return null;
+                        } else if (prev === null) {
+                            throw new NullLinkError(cur);
+                        } else if (cur.constructor === Array) {
+                            var _name = cur[0],
+                                args = cur.slice(1);
+                            var next = prev[_name];
+                            if (next && next.apply) {
+                                return next.apply(prev, args);
+                            } else {
+                                throw new NotInvokableError(_name);
+                            }
+                        } else if (prev[cur] !== undefined) {
+                            return prev[cur];
+                        } else {
+                            throw new MissingLinkError(cur);
+                        }
+                    }, base);
                 },
                 writable: true,
                 configurable: true
@@ -126,7 +119,7 @@
                     }
 
                     try {
-                        return koalaesce.impl(base, steps);
+                        return koalaesce.getOrThrow.apply(koalaesce, [base].concat(steps));
                     } catch (e) {
                         if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
                             return def;
