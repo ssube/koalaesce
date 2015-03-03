@@ -11,8 +11,7 @@
     "babel": "~4.6.0"
   },
   "scripts": {
-    "test": "gulp test",
-    "prepublish": "gulp"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
