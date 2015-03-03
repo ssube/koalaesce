@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - "node"
-  - "iojs"
+- node
+- iojs
 before_script:
-  - npm install -g gulp
+- npm install -g gulp
 script: gulp
+deploy:
+  provider: npm
+  email: seansube@gmail.com
+  api_key:
+    secure: MczsWmY6bz5zwZpsXedNH8i9l7c+f18PtsIVdSTl1wrfg9nswU5TxLbYlo9Pfk0CJScJ/kXNmGdBjMNZP8PvhbQigxa53/hTd3RcFE5VyAlkJx+O7izkRyNbuFXquMfoo8Ugap/cWNBW+xq5GMq7A6Q96En6Ryeb439BO99Qedk=
+  on:
+    repo: ssube/koalaesce
+  skip_cleanup: true
