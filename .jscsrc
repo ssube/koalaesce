@@ -1,0 +1,8 @@
+{
+  "esnext": true,
+  "validateQuoteMarks": "\"",
+  "disallowTrailingWhitespace": true,
+  "disallowMultipleLineStrings": true,
+  "disallowMixedSpacesAndTabs": true,
+  "disallowEmptyBlocks": true
+}

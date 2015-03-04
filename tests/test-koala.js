@@ -78,6 +78,10 @@ describe("koalaesce", () => {
         var obj = new TestObject();
         assert.equal(obj.value, koalaesce.get(obj, ["getValue"]));
     });
+
+    it("should handle null base objects", () => {
+        assert.equal(null, koalaesce.get(null, "foo", "bar"));
+    });
   });
 
   describe("getOrThrow", () => {
@@ -91,6 +95,12 @@ describe("koalaesce", () => {
     it("should get present properties", () => {
         var obj = {foo: {bar: Math.random()}};
         assert.equal(obj.foo.bar, koalaesce.getOrThrow(obj, "foo", "bar"));
+    });
+
+    it("should throw on null base objects", () => {
+        assert.throws(() => {
+            koalaesce.getOrThrow(null, "foo", "bar");
+        });
     });
   });
 
@@ -110,6 +120,10 @@ describe("koalaesce", () => {
     it("should handle null values along the chain", () => {
         var obj = {foo: null};
         assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
+    });
+
+    it("should handle null base objects", () => {
+        assert.equal(3, koalaesce.getDefault(null, 3, "foo", "bar"));
     });
   });
 });
