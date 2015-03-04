@@ -132,6 +132,12 @@ describe("koalaesce", () => {
         var obj = {foo: {bar: 3}};
         assert.equal(3, koalaesce.getNamed(obj, 'foo.bar'));
     });
+
+    it("should return null", () => {
+        var obj = {foo: {bar: 3}};
+        assert.equal(null, koalaesce.getNamed(obj, 'foo.baz'));
+    });
+
   });
 
   describe("getNamedOrDefault", () => {

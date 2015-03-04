@@ -79,9 +79,17 @@ This can be useful in environments where an exception may trigger other behavior
 link where the error was encountered will be included in the error message.
 
 ### `getNamed`
-`koalaesce.getNamed` delegates to `get`, but only takes two arguments: the base object and a string of all links in the chain, separated by `.`s. This is stylistically similar to using the `obj.foo.bar` syntax, with the additional checks `koalaesce` provides.
+`koalaesce.getNamed` behaves much like `koalaesce.get`, but only takes two arguments: the base object and a string of all links in the chain, separated by `.`s. This is stylistically similar to using the `obj.foo.bar` syntax, with the additional checks `koalaesce` provides.
 
     let obj = {foo: {bar: 3}};
-    koalaesce.getNamed(obj, "foo.bar") == 3;
+    koalaesce.getNamed(obj, "foo.bar") === 3;
 
 **Note:** This does not support property names containing the '.' character, yet. Support for those is planned.
+
+### `getNamedOrDefault`
+`koalaesce.getNamedOrDefault` behaves much like `koalaesce.getOrDefault`, but only takes three arguments: the base object, a default return value, and a string of links in the chain. It uses the same '.'-separated behavior as `getNamed`:
+
+    let obj = {foo: {baz: 3}};
+    koalaesce.getNamedOrDefault(obj, 4, "foo.bar") === 4;
+
+**Note:** The same caveat about property names containing the '.' character applies to `getNamedOrDefault` as to `getNamed`.
