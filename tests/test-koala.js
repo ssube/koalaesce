@@ -53,7 +53,7 @@ describe("koalaesce", () => {
 
     it("should use the previous link as this scope", () => {
         // Don't replace this function () { ... } with an arrow func, it tests scope stuff
-        var obj = {foo: {bar: 4, baz: function () { return this.bar }}};
+        var obj = {foo: {bar: 4, baz: function () { return this.bar; }}};
         assert.equal(4, koalaesce.get(obj, "foo", ["baz"]));
     });
 
