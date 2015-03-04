@@ -1,6 +1,7 @@
 # koalaesce
 
 Travis CI: [![Build Status](https://travis-ci.org/ssube/koalaesce.svg?branch=master)](https://travis-ci.org/ssube/koalaesce)
+Code Climate: [![Code Climate](https://codeclimate.com/github/ssube/koalaesce/badges/gpa.svg)](https://codeclimate.com/github/ssube/koalaesce)
 
 ## About
 A simple null-coalescing library for JS, providing behavior much like 
