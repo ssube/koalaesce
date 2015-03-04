@@ -2,6 +2,9 @@
 
 Travis CI: [![Build Status](https://travis-ci.org/ssube/koalaesce.svg?branch=master)](https://travis-ci.org/ssube/koalaesce)
 Code Climate: [![Code Climate](https://codeclimate.com/github/ssube/koalaesce/badges/gpa.svg)](https://codeclimate.com/github/ssube/koalaesce)
+Test Coverage: [![Test Coverage](https://codeclimate.com/github/ssube/koalaesce/badges/coverage.svg)](https://codeclimate.com/github/ssube/koalaesce)
+Dependencies: [![Dependency Status](https://david-dm.org/ssube/koalaesce.svg)](https://david-dm.org/ssube/koalaesce) 
+Dev Dependencies: [![devDependency Status](https://david-dm.org/ssube/koalaesce/dev-status.svg)](https://david-dm.org/ssube/koalaesce#info=devDependencies)
 
 ## About
 A simple null-coalescing library for JS, providing behavior much like 
