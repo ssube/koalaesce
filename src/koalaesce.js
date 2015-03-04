@@ -32,7 +32,19 @@ let reduceImpl = Array.prototype.reduce ? koalaesce_reducePass : koalaesce_reduc
 
 export default class koalaesce {
     static get(base, ...steps) {
-        return koalaesce.getDefault(base, null, ...steps);
+        return koalaesce.getOrDefault(base, null, ...steps);
+    }
+
+    static getOrDefault(base, def, ...steps) {
+        try {
+            return koalaesce.getOrThrow(base, ...steps);
+        } catch (e) {
+            if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
+                return def;
+            } else {
+                throw e;
+            }
+        }
     }
 
     static getOrThrow(base, ...steps) {
@@ -57,15 +69,12 @@ export default class koalaesce {
         }, base);
     }
 
-    static getDefault(base, def, ...steps) {
-        try {
-            return koalaesce.getOrThrow(base, ...steps);
-        } catch (e) {
-            if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
-                return def;
-            } else {
-                throw e;
-            }
-        }
+    static getNamed(base, name) {
+        return koalaesce.getNamedOrDefault(base, null, name);
+    }
+
+    static getNamedOrDefault(base, def, name) {
+        let steps = name.split('.');
+        return koalaesce.getOrDefault(base, def, ...steps);
     }
 }

@@ -107,23 +107,42 @@ describe("koalaesce", () => {
   describe("getOrDefault", () => {
     it("should return the default", () => {
         var obj = {foo: {baz: 0}};
-        assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
+        assert.equal(3, koalaesce.getOrDefault(obj, 3, "foo", "bar"));
     });
 
     it("should not catch exceptions and default", () => {
         var obj = {foo: () => { throw new Error("Boom!"); }};
         assert.throws(() => {
-            koalaesce.getDefault(obj, 3, ["foo"]);
+            koalaesce.getOrDefault(obj, 3, ["foo"]);
         });
     });
 
     it("should handle null values along the chain", () => {
         var obj = {foo: null};
-        assert.equal(3, koalaesce.getDefault(obj, 3, "foo", "bar"));
+        assert.equal(3, koalaesce.getOrDefault(obj, 3, "foo", "bar"));
     });
 
     it("should handle null base objects", () => {
-        assert.equal(3, koalaesce.getDefault(null, 3, "foo", "bar"));
+        assert.equal(3, koalaesce.getOrDefault(null, 3, "foo", "bar"));
+    });
+  });
+
+  describe("getNamed", () => {
+    it("should get a property", () => {
+        var obj = {foo: {bar: 3}};
+        assert.equal(3, koalaesce.getNamed(obj, 'foo.bar'));
+    });
+  });
+
+  describe("getNamedOrDefault", () => {
+    it("should get a property", () => {
+        var obj = {foo: {bar: 3}};
+        assert.equal(3, koalaesce.getNamedOrDefault(obj, 4, 'foo.bar'));
+    });
+
+    it("should return the default value", () => {
+        var obj = {foo: {bar: 3}};
+        assert.equal(4, koalaesce.getNamedOrDefault(obj, 4, 'foo.baz'));
     });
   });
 });

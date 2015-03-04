@@ -1,6 +1,8 @@
 define(["exports", "module"], function (exports, module) {
     "use strict";
 
+    var _toConsumableArray = function (arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } };
+
     var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
     var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -71,7 +73,26 @@ define(["exports", "module"], function (exports, module) {
                         steps[_key - 1] = arguments[_key];
                     }
 
-                    return koalaesce.getDefault.apply(koalaesce, [base, null].concat(steps));
+                    return koalaesce.getOrDefault.apply(koalaesce, [base, null].concat(steps));
+                },
+                writable: true,
+                configurable: true
+            },
+            getOrDefault: {
+                value: function getOrDefault(base, def) {
+                    for (var _len = arguments.length, steps = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+                        steps[_key - 2] = arguments[_key];
+                    }
+
+                    try {
+                        return koalaesce.getOrThrow.apply(koalaesce, [base].concat(steps));
+                    } catch (e) {
+                        if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
+                            return def;
+                        } else {
+                            throw e;
+                        }
+                    }
                 },
                 writable: true,
                 configurable: true
@@ -106,21 +127,17 @@ define(["exports", "module"], function (exports, module) {
                 writable: true,
                 configurable: true
             },
-            getDefault: {
-                value: function getDefault(base, def) {
-                    for (var _len = arguments.length, steps = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-                        steps[_key - 2] = arguments[_key];
-                    }
-
-                    try {
-                        return koalaesce.getOrThrow.apply(koalaesce, [base].concat(steps));
-                    } catch (e) {
-                        if (e.constructor === MissingLinkError || e.constructor === NullLinkError) {
-                            return def;
-                        } else {
-                            throw e;
-                        }
-                    }
+            getNamed: {
+                value: function getNamed(base, name) {
+                    return koalaesce.getNamedOrDefault(base, null, name);
+                },
+                writable: true,
+                configurable: true
+            },
+            getNamedOrDefault: {
+                value: function getNamedOrDefault(base, def, name) {
+                    var steps = name.split(".");
+                    return koalaesce.getOrDefault.apply(koalaesce, [base, def].concat(_toConsumableArray(steps)));
                 },
                 writable: true,
                 configurable: true
