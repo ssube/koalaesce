@@ -1,0 +1,9 @@
+{
+  "maxerr": 10,
+  "node": true,
+  "curly": true,
+  "eqeqeq": true,
+  "undef": true,
+  "unused": true,
+  "esnext": true
+}
