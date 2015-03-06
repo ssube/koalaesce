@@ -9,7 +9,8 @@
 ## About
 A simple null-coalescing library for JS, providing behavior much like 
 [C#'s `??` operator](https://msdn.microsoft.com/en-us/library/ms173224.aspx) or 
-[Groovy's `?.` operator](http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)).
+[Groovy's `?.` operator](http://groovy.codehaus.org/Operators#Operators-ElvisOperator(?:)). Includes an ES7-compatible
+infix implementation as well as a more traditional utility class.
 
 `koalaesce.get` allows you to pass a base object and chain of property names and retrieve the last link in the chain,
 without worrying about the intermediate null checks. It also features invocation of functions found along the way, and
@@ -18,7 +19,11 @@ the ability to specify a default value if the chain could not be resolved.
 ## Usage
 `koalaesce` is set up as a utility class, so you should start by requiring it:
 
-    let koalaesce = require("./koalaesce");
+    let koalaesce = require("koalaesce");
+
+or if you would like the infix version:
+
+    let {get: kg, call: kc, default: kd} = require("./node_modules/koalaesce/dist/koalaesce-infix");
 
 The gulpfile included with `koalaesce` builds modules for AMD, CommonJS, and UMD loaders, so `koalaesce` should be
 compatible with most module systems and is usable from the browser as well as node/io tools.
@@ -93,3 +98,26 @@ link where the error was encountered will be included in the error message.
     koalaesce.getNamedOrDefault(obj, 4, "foo.bar") === 4;
 
 **Note:** The same caveat about property names containing the '.' character applies to `getNamedOrDefault` as to `getNamed`.
+
+### **Infix Usage**
+`koalaesce` provides an experimental ES7 implementation, using abstract references and infix calls.
+
+Methods are provided to get a property, call a method, and get a default value, all of which can be called on a
+variable or object and chained with one another.
+
+**Note:** using this version requires the `experimental` flag to be set in your BabelJS options.
+
+#### `koalainfix.get`
+
+    let obj = {foo: {bar: 3}};
+    obj::kg('foo')::kg('bar') === 3;
+
+#### `koalainfix.call`
+
+    let obj = {foo: (a) => { return a+1; }};
+    obj::kg('foo')::kc(3) === 4;
+
+#### `koalainfix.default`
+
+    let obj = {foo: null};
+    obj::kg('foo')::kg('bar')::kd(20) === 20;
