@@ -24,6 +24,16 @@ define(["exports", "module"], function (exports, module) {
                 writable: true,
                 configurable: true
             },
+            getNamed: {
+                value: function getNamed(chain) {
+                    var links = koalautil.splitChain(chain);
+                    return koalautil.reduce(links, function (prev, cur) {
+                        return koalainfix.get.call(prev, cur);
+                    }, this);
+                },
+                writable: true,
+                configurable: true
+            },
             call: {
                 value: function call(name) {
                     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {

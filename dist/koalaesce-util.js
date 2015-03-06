@@ -30,6 +30,13 @@ var koalautil = (function () {
             },
             writable: true,
             configurable: true
+        },
+        splitChain: {
+            value: function splitChain(chain) {
+                return chain.split(".");
+            },
+            writable: true,
+            configurable: true
         }
     });
 

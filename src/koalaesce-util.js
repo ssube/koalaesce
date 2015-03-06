@@ -13,4 +13,8 @@ export default class koalautil {
     static checkRef(ref) {
         return (ref !== undefined && ref !== null);
     }
+
+    static splitChain(chain) {
+        return chain.split('.');
+    }
 }

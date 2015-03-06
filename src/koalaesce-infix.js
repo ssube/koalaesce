@@ -9,6 +9,13 @@ export default class koalainfix {
         }
     }
 
+    static getNamed(chain) {
+        let links = koalautil.splitChain(chain);
+        return koalautil.reduce(links, (prev, cur) => {
+            return koalainfix.get.call(prev, cur);
+        }, this);
+    }
+
     static call(name, ...args) {
         let prop = koalainfix.get.call(this, name);
         if (typeof prop === 'function' && prop.apply) {

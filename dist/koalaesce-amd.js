@@ -89,8 +89,8 @@ define(["exports", "module"], function (exports, module) {
                 configurable: true
             },
             getNamedOrDefault: {
-                value: function getNamedOrDefault(base, def, name) {
-                    var steps = name.split(".");
+                value: function getNamedOrDefault(base, def, chain) {
+                    var steps = koalautil.splitChain(chain);
                     return koalaesce.getOrDefault.apply(koalaesce, [base, def].concat(_toConsumableArray(steps)));
                 },
                 writable: true,

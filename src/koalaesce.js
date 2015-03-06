@@ -44,8 +44,8 @@ export default class koalaesce {
         return koalaesce.getNamedOrDefault(base, null, name);
     }
 
-    static getNamedOrDefault(base, def, name) {
-        let steps = name.split('.');
+    static getNamedOrDefault(base, def, chain) {
+        let steps = koalautil.splitChain(chain);
         return koalaesce.getOrDefault(base, def, ...steps);
     }
 }

@@ -23,7 +23,7 @@ the ability to specify a default value if the chain could not be resolved.
 
 or if you would like the infix version:
 
-    let {get: kg, call: kc, default: kd} = require("./node_modules/koalaesce/dist/koalaesce-infix");
+    let {get: kg, getNamed: kgn, call: kc, default: kd} = require("./node_modules/koalaesce/dist/koalaesce-infix");
 
 The gulpfile included with `koalaesce` builds modules for AMD, CommonJS, and UMD loaders, so `koalaesce` should be
 compatible with most module systems and is usable from the browser as well as node/io tools.
@@ -111,6 +111,11 @@ variable or object and chained with one another.
 
     let obj = {foo: {bar: 3}};
     obj::kg('foo')::kg('bar') === 3;
+
+#### `koalainfix.getNamed`
+
+    let obj = {foo: {bar: 3}};
+    obj::kgn('foo.bar') === 3;
 
 #### `koalainfix.call`
 

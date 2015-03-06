@@ -1,4 +1,4 @@
-let {get: kg, call: kc, default: kd} = require('../dist/koalaesce-infix');
+let {get: kg, getNamed: kgn, call: kc, default: kd} = require('../dist/koalaesce-infix');
 let assert = require('assert');
 
 describe('koalaesce-infix', () => {
@@ -6,6 +6,13 @@ describe('koalaesce-infix', () => {
         it('should return nested properties', () => {
             let obj = {foo: {bar: 3}};
             assert.equal(3, obj::kg('foo')::kg('bar'));
+        });
+    });
+
+    describe('getNamed', () => {
+        it('should get nested properties', () => {
+            let obj = {foo: {bar: 3}};
+            assert.equal(3, obj::kgn('foo.bar'));
         });
     });
 
