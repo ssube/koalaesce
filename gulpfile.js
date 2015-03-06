@@ -11,7 +11,8 @@ function compileModules(type, append) {
 
     return gulp.src("src/**/*.js")
         .pipe(babel({
-            modules: type
+            modules: type,
+            experimental: true
         }))
         .pipe(rename(function (path) {
             if (append) {
@@ -24,6 +25,7 @@ function compileModules(type, append) {
 gulp.task("lint", function () {
     return gulp.src("src/**/*.js")
         .pipe(jshint())
+        .pipe(jshint.reporter('default'))
         .pipe(jshint.reporter("fail"));
 });
 
@@ -42,7 +44,9 @@ gulp.task("scripts:umd", function () {
 gulp.task("scripts", ["lint", "scripts:amd", "scripts:common", "scripts:umd"]);
 
 gulp.task("tests", ["scripts"], function () {
-    require("babel/register");
+    require("babel/register")({
+        experimental: true
+    });
 
     return gulp.src("tests/**/*.js")
         .pipe(mocha());

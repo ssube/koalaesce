@@ -1,20 +1,4 @@
-class MissingLinkError extends Error {
-    constructor(link) {
-        super("Missing link at " + link);
-    }
-}
-
-class NullLinkError extends Error {
-    constructor(link) {
-        super("Encountered a null link at " + link);
-    }
-}
-
-class NotInvokableError extends Error {
-    constructor(link) {
-        super("Attempting to invoke non-function at " + link);
-    }
-}
+let {MissingLinkError, NullLinkError, NotInvokableError} = require('./koalaesce-errors');
 
 function koalaesce_reducePass(scope, cb, initial) {
     return scope.reduce(cb, initial);
