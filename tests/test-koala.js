@@ -83,14 +83,14 @@ describe("koalaesce", () => {
         assert.equal(null, koalaesce.get(null, "foo", "bar"));
     });
 
-      it("should handle undefined base objects", () => {
-          assert.equal(null, koalaesce.get(undefined, "foo", "bar"));
-      });
+    it("should handle undefined base objects", () => {
+        assert.equal(null, koalaesce.get(undefined, "foo", "bar"));
+    });
 
-      it("should handle undefined links", () => {
-          let obj = {foo: {bar: 3}};
-          assert.equal(null, koalaesce.get(obj, "foo", undefined));
-      });
+    it("should handle undefined links", () => {
+        let obj = {foo: {bar: 3}};
+        assert.equal(null, koalaesce.get(obj, "foo", undefined));
+    });
   });
 
   describe("getOrThrow", () => {
