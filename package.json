@@ -1,6 +1,6 @@
 {
   "name": "koalaesce",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Null coalescing library for JS",
   "main": "dist/koalaesce.js",
   "devDependencies": {
