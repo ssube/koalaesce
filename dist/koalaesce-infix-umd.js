@@ -21,7 +21,7 @@
         _prototypeProperties(koalainfix, {
             get: {
                 value: function get(name) {
-                    if (this && this[name] !== "undefined") {
+                    if (this !== undefined && this !== null) {
                         return this[name];
                     } else {
                         return null;
@@ -36,7 +36,7 @@
                         args[_key] = arguments[_key];
                     }
 
-                    if (this && this.apply) {
+                    if (typeof this === "function" && this.apply) {
                         return this.apply(this, args);
                     } else {
                         return null;
@@ -47,7 +47,7 @@
             },
             "default": {
                 value: function _default(def) {
-                    if (this) {
+                    if (this !== undefined && this !== null) {
                         return this;
                     } else {
                         return def;

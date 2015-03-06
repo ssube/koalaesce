@@ -33,9 +33,9 @@ export default class koalaesce {
 
     static getOrThrow(base, ...steps) {
         return reduceImpl(steps, (prev, cur) => {
-            if (cur === null) {
+            if (cur === undefined || cur === null) {
                 return null;
-            } else if (prev === null) {
+            } else if (prev === undefined || prev === null) {
                 throw new NullLinkError(cur);
             } else if (cur.constructor === Array) {
                 let name = cur[0], args = cur.slice(1);

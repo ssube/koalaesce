@@ -76,9 +76,9 @@
                     }
 
                     return reduceImpl(steps, function (prev, cur) {
-                        if (cur === null) {
+                        if (cur === undefined || cur === null) {
                             return null;
-                        } else if (prev === null) {
+                        } else if (prev === undefined || prev === null) {
                             throw new NullLinkError(cur);
                         } else if (cur.constructor === Array) {
                             var _name = cur[0],

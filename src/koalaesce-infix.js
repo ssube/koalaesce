@@ -2,7 +2,7 @@
 
 export default class koalainfix {
     static get(name) {
-        if (this && this[name] !== 'undefined') {
+        if (this !== undefined && this !== null) {
             return this[name];
         } else {
             return null;
@@ -10,7 +10,7 @@ export default class koalainfix {
     }
 
     static call(...args) {
-        if (this && this.apply) {
+        if (typeof this === 'function' && this.apply) {
             return this.apply(this, args);
         } else {
             return null;
@@ -18,7 +18,7 @@ export default class koalainfix {
     }
 
     static default(def) {
-        if (this) {
+        if (this !== undefined && this !== null) {
             return this;
         } else {
             return def;
