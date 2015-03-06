@@ -1,18 +1,5 @@
 let {MissingLinkError, NullLinkError, NotInvokableError} = require('./koalaesce-errors');
-
-function koalaesce_reducePass(scope, cb, initial) {
-    return scope.reduce(cb, initial);
-}
-
-function koalaesce_reduceShim(scope, cb, initial) {
-    let value = initial;
-    for (let i = 0; i < scope.length; ++i) {
-        value = cb(value, scope[i]);
-    }
-    return value;
-}
-
-let reduceImpl = Array.prototype.reduce ? koalaesce_reducePass : koalaesce_reduceShim;
+let koalautil = require('./koalaesce-util');
 
 export default class koalaesce {
     static get(base, ...steps) {
@@ -32,10 +19,10 @@ export default class koalaesce {
     }
 
     static getOrThrow(base, ...steps) {
-        return reduceImpl(steps, (prev, cur) => {
-            if (cur === undefined || cur === null) {
+        return koalautil.reduce(steps, (prev, cur) => {
+            if (!koalautil.checkRef(cur)) {
                 return null;
-            } else if (prev === undefined || prev === null) {
+            } else if (!koalautil.checkRef(prev)) {
                 throw new NullLinkError(cur);
             } else if (cur.constructor === Array) {
                 let name = cur[0], args = cur.slice(1);

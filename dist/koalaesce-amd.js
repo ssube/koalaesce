@@ -13,19 +13,7 @@ define(["exports", "module"], function (exports, module) {
     var NullLinkError = _require.NullLinkError;
     var NotInvokableError = _require.NotInvokableError;
 
-    function koalaesce_reducePass(scope, cb, initial) {
-        return scope.reduce(cb, initial);
-    }
-
-    function koalaesce_reduceShim(scope, cb, initial) {
-        var value = initial;
-        for (var i = 0; i < scope.length; ++i) {
-            value = cb(value, scope[i]);
-        }
-        return value;
-    }
-
-    var reduceImpl = Array.prototype.reduce ? koalaesce_reducePass : koalaesce_reduceShim;
+    var koalautil = require("./koalaesce-util");
 
     var koalaesce = (function () {
         function koalaesce() {
@@ -69,10 +57,10 @@ define(["exports", "module"], function (exports, module) {
                         steps[_key - 1] = arguments[_key];
                     }
 
-                    return reduceImpl(steps, function (prev, cur) {
-                        if (cur === undefined || cur === null) {
+                    return koalautil.reduce(steps, function (prev, cur) {
+                        if (!koalautil.checkRef(cur)) {
                             return null;
-                        } else if (prev === undefined || prev === null) {
+                        } else if (!koalautil.checkRef(prev)) {
                             throw new NullLinkError(cur);
                         } else if (cur.constructor === Array) {
                             var _name = cur[0],

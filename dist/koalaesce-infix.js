@@ -4,7 +4,7 @@ var _prototypeProperties = function (child, staticProps, instanceProps) { if (st
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-//let {MissingLinkError, NullLinkError, NotInvokableError} = require('./koalaesce-errors');
+var koalautil = require("./koalaesce-util");
 
 var koalainfix = (function () {
     function koalainfix() {
@@ -14,7 +14,7 @@ var koalainfix = (function () {
     _prototypeProperties(koalainfix, {
         get: {
             value: function get(name) {
-                if (this !== undefined && this !== null) {
+                if (koalautil.checkRef(this)) {
                     return this[name];
                 } else {
                     return null;
@@ -40,7 +40,7 @@ var koalainfix = (function () {
         },
         "default": {
             value: function _default(def) {
-                if (this !== undefined && this !== null) {
+                if (koalautil.checkRef(this)) {
                     return this;
                 } else {
                     return def;

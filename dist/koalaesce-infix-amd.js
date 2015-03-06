@@ -5,7 +5,7 @@ define(["exports", "module"], function (exports, module) {
 
     var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-    //let {MissingLinkError, NullLinkError, NotInvokableError} = require('./koalaesce-errors');
+    var koalautil = require("./koalaesce-util");
 
     var koalainfix = (function () {
         function koalainfix() {
@@ -15,7 +15,7 @@ define(["exports", "module"], function (exports, module) {
         _prototypeProperties(koalainfix, {
             get: {
                 value: function get(name) {
-                    if (this !== undefined && this !== null) {
+                    if (koalautil.checkRef(this)) {
                         return this[name];
                     } else {
                         return null;
@@ -41,7 +41,7 @@ define(["exports", "module"], function (exports, module) {
             },
             "default": {
                 value: function _default(def) {
-                    if (this !== undefined && this !== null) {
+                    if (koalautil.checkRef(this)) {
                         return this;
                     } else {
                         return def;

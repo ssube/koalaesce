@@ -1,8 +1,8 @@
-//let {MissingLinkError, NullLinkError, NotInvokableError} = require('./koalaesce-errors');
+let koalautil = require('./koalaesce-util');
 
 export default class koalainfix {
     static get(name) {
-        if (this !== undefined && this !== null) {
+        if (koalautil.checkRef(this)) {
             return this[name];
         } else {
             return null;
@@ -18,7 +18,7 @@ export default class koalainfix {
     }
 
     static default(def) {
-        if (this !== undefined && this !== null) {
+        if (koalautil.checkRef(this)) {
             return this;
         } else {
             return def;
