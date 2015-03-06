@@ -24,13 +24,14 @@ var koalainfix = (function () {
             configurable: true
         },
         call: {
-            value: function call() {
-                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                    args[_key] = arguments[_key];
+            value: function call(name) {
+                for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                    args[_key - 1] = arguments[_key];
                 }
 
-                if (typeof this === "function" && this.apply) {
-                    return this.apply(this, args);
+                var prop = koalainfix.get.call(this, name);
+                if (typeof prop === "function" && prop.apply) {
+                    return prop.apply(this, args);
                 } else {
                     return null;
                 }

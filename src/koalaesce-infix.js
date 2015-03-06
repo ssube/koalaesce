@@ -9,9 +9,10 @@ export default class koalainfix {
         }
     }
 
-    static call(...args) {
-        if (typeof this === 'function' && this.apply) {
-            return this.apply(this, args);
+    static call(name, ...args) {
+        let prop = koalainfix.get.call(this, name);
+        if (typeof prop === 'function' && prop.apply) {
+            return prop.apply(this, args);
         } else {
             return null;
         }

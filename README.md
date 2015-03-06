@@ -115,7 +115,7 @@ variable or object and chained with one another.
 #### `koalainfix.call`
 
     let obj = {foo: (a) => { return a+1; }};
-    obj::kg('foo')::kc(3) === 4;
+    obj::kc('foo', 3) === 4;
 
 #### `koalainfix.default`
 

@@ -12,12 +12,12 @@ describe('koalaesce-infix', () => {
     describe('call', () => {
         it('should invoke single-argument methods', () => {
             let obj = {foo: (a) => { return {bar: a}; }};
-            assert.equal(9, obj::kg('foo')::kc(9)::kg('bar'));
+            assert.equal(9, obj::kc('foo', 9)::kg('bar'));
         });
 
         it('should invoke multi-argument methods', () => {
             let obj = {foo: (a, b, c) => { return {bar: a + b + c}; }};
-            assert.equal(20, obj::kg('foo')::kc(4, 6, 10)::kg('bar'));
+            assert.equal(20, obj::kc('foo', 4, 6, 10)::kg('bar'));
         });
     });
 
