@@ -1,55 +1,51 @@
-var gulp = require("gulp");
-var babel = require("gulp-babel");
-var mocha = require("gulp-mocha");
-var rename = require("gulp-rename");
-var jshint = require("gulp-jshint");
+var gulp = require('gulp');
+var babel = require('gulp-babel');
+var mocha = require('gulp-mocha');
+var eslint = require('gulp-eslint');
+var rename = require('gulp-rename');
 
-function compileModules(type, append) {
-    if (append === undefined) {
-        append = true;
-    }
+var globs = {
+  src: 'src/**/*.es6',
+  test: 'tests/**/*.es6'
+};
 
-    return gulp.src("src/**/*.js")
-        .pipe(babel({
-            modules: type,
-            experimental: true
-        }))
-        .pipe(rename(function (path) {
-            if (append) {
-                path.basename += "-" + type;
-            }
-        }))
-        .pipe(gulp.dest("dist"));
+function babelOptions() {
+  return {
+    modules: 'umd'
+  };
 }
 
-gulp.task("lint", function () {
-    return gulp.src("src/**/*.js")
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(jshint.reporter("fail"));
+function eslintOptions() {
+  return {
+    configFile: 'eslint.json'
+  };
+}
+
+gulp.task('lint', function () {
+  return gulp.src(globs.src)
+    .pipe(eslint(eslintOptions()))
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
 });
 
-gulp.task("scripts:amd", function () {
-    return compileModules("amd");
+gulp.task('compile:es6', ['lint'], function () {
+  return gulp.src(globs.src)
+    .pipe(babel(babelOptions()))
+    .pipe(gulp.dest('dist'));
 });
 
-gulp.task("scripts:common", function () {
-    return compileModules("common", false);
+gulp.task('test', ['compile'], function () {
+  require('babel/register')();
+
+  return gulp.src(globs.test)
+    .pipe(mocha());
 });
 
-gulp.task("scripts:umd", function () {
-    return compileModules("umd");
+gulp.task('package:manifest', function () {
+  return gulp.src('package.json')
+    .pipe(gulp.dest('dist'));
 });
 
-gulp.task("scripts", ["lint", "scripts:amd", "scripts:common", "scripts:umd"]);
-
-gulp.task("tests", ["scripts"], function () {
-    require("babel/register")({
-        experimental: true
-    });
-
-    return gulp.src("tests/**/*.js")
-        .pipe(mocha());
-});
-
-gulp.task("default", ["scripts", "tests"]);
+gulp.task('compile', ['compile:es6']);
+gulp.task('package', ['package:manifest']);
+gulp.task('default', ['lint', 'compile', 'test', 'package']);
