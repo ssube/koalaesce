@@ -9,6 +9,12 @@ var globs = {
   test: 'tests/**/*.es6'
 };
 
+var res = [
+  'package.json',
+  'README.md',
+  'LICENSE'
+];
+
 function babelOptions() {
   return {
     modules: 'umd'
@@ -41,11 +47,10 @@ gulp.task('test', ['compile'], function () {
     .pipe(mocha());
 });
 
-gulp.task('package:manifest', function () {
-  return gulp.src('package.json')
+gulp.task('package', function () {
+  return gulp.src(res)
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('compile', ['compile:es6']);
-gulp.task('package', ['package:manifest']);
 gulp.task('default', ['lint', 'compile', 'test', 'package']);
