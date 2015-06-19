@@ -4,8 +4,6 @@ node_js:
 before_script:
 - npm install -g gulp
 script: gulp
-before_deploy:
-- rm -fv ".gitignore"
 deploy:
   provider: npm
   email: seansube@gmail.com
