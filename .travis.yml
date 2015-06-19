@@ -1,12 +1,11 @@
 language: node_js
 node_js:
 - node
-- iojs
 before_script:
 - npm install -g gulp
 script: gulp
 before_deploy:
-- cd dist
+- cd dist && ls .
 deploy:
   provider: npm
   email: seansube@gmail.com
